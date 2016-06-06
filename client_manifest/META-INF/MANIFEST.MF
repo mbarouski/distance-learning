@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: distance.learning.client.ClientMainApp
+Main-Class: distance.learning.client.ClientMainApp
+

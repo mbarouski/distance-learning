@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: distance.learning.server.ServerMainApp
+Main-Class: distance.learning.server.ServerMainApp
+
