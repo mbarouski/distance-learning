@@ -4,18 +4,18 @@ package distance.learning.server;
  */
 
 import distance.learning.server.util.Util;
-import distance.learning.server.view.Controller;
 import distance.learning.server.view.ServerMainWindowController;
 import distance.learning.server.view.ServerRootLayoutController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import javax.sound.sampled.*;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Mixer;
 import java.net.InetAddress;
 import java.util.ArrayList;
 
@@ -29,18 +29,22 @@ public class ServerMainApp extends Application {
     public ServerRootLayoutController rootController;
     public ServerMainWindowController serverMainWindowController;
     private Mixer.Info mixerInfo = null;
-    public void setMixerInfo(Mixer.Info mixerInfo){
+
+    public void setMixerInfo(Mixer.Info mixerInfo) {
         this.mixerInfo = mixerInfo;
     }
-    public Mixer.Info getMixerInfo(){
+
+    public Mixer.Info getMixerInfo() {
         return this.mixerInfo;
     }
+
     private boolean running = true;
 
-    public void setRunning(boolean running){
+    public void setRunning(boolean running) {
         this.running = running;
     }
-    public boolean getRunning(){
+
+    public boolean getRunning() {
         return this.running;
     }
 
@@ -52,12 +56,12 @@ public class ServerMainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
 
-    private void stopAllThreads(){
+    private void stopAllThreads() {
         try {
             //serverMainWindowController.stopThreads();
             System.exit(0);
+        } catch (Exception exc) {
         }
-        catch(Exception exc){}
     }
 
     @Override
@@ -65,20 +69,21 @@ public class ServerMainApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Distance Learning Server");
         primaryStage.setFullScreen(true);
-        this.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
-            public void handle(WindowEvent windowEvent){
+        this.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent windowEvent) {
                 //setRunning(false);
                 stopAllThreads();
                 try {
                     //Thread.sleep(4000);
+                } catch (Exception exc) {
                 }
-                catch(Exception exc){}
             }
         });
         initRootLayout();
         showServerMainWindow();
     }
-    public void initRootLayout(){
+
+    public void initRootLayout() {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(ServerMainApp.class.getResource("view/ServerRootLayout.fxml"));
         try {
@@ -88,10 +93,11 @@ public class ServerMainApp extends Application {
             rootController = loader.getController();
 
             rootController.setMainApp(this);
+        } catch (Exception exc) {
         }
-        catch(Exception exc){}
     }
-    public void showServerMainWindow(){
+
+    public void showServerMainWindow() {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(ServerMainApp.class.getResource("view/ServerMainWindow.fxml"));
         try {
@@ -102,14 +108,13 @@ public class ServerMainApp extends Application {
             serverMainWindowController = loader.getController();
 
             serverMainWindowController.setMainApp(this);
-        }
-        catch(Exception exc){
+        } catch (Exception exc) {
             Util.showErrorMessage(exc.getMessage());
         }
         initParams();
     }
 
-    public void initParams(){
+    public void initParams() {
         try {
             password = "777";
             serverIP = InetAddress.getByName("127.0.0.1");
@@ -117,8 +122,8 @@ public class ServerMainApp extends Application {
             messageServerPort = 8841;
             figureServerPort = 8842;
             mixerInfo = AudioSystem.getMixerInfo()[0];
+        } catch (Exception exc) {
         }
-        catch(Exception exc){}
     }
 
     //settings
@@ -129,32 +134,35 @@ public class ServerMainApp extends Application {
     public int figureServerPort;
     public int audioServerPort;
 
-    public void setServerIP(String temp){
-        try{
+    public void setServerIP(String temp) {
+        try {
             serverIP = InetAddress.getByName(temp);
-        }
-        catch (Exception exc){
+        } catch (Exception exc) {
             serverIP = null;
         }
     }
-    public InetAddress getServerIP(){
+
+    public InetAddress getServerIP() {
         return serverIP;
     }
-    public void setGroupIP(String temp){
-        try{
+
+    public void setGroupIP(String temp) {
+        try {
             groupIP = InetAddress.getByName(temp);
-        }
-        catch (Exception exc){
+        } catch (Exception exc) {
             groupIP = null;
         }
     }
-    public InetAddress getGroupIP(){
+
+    public InetAddress getGroupIP() {
         return groupIP;
     }
-    public void setPassword(String password){
+
+    public void setPassword(String password) {
         this.password = password;
     }
-    public String getPassword(){
+
+    public String getPassword() {
         return password;
     }
 }
