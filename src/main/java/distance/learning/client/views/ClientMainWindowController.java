@@ -43,25 +43,25 @@ public class ClientMainWindowController extends BaseController<ClientMainApp> {
     @FXML
     private TextArea msgArea;
 
-    public void initialize(){
-        btnSpeaker.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("../resources/icon/non-speaker.png"))));
+    public void initialize() {
+//        btnSpeaker.setGraphic(new ImageView(getMainApp().getResourceLoader().loadImage("non-speaker")));
         canvas.getGraphicsContext2D().setFill(Color.WHITE);
         canvas.getGraphicsContext2D().fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         baseG = canvas.getGraphicsContext2D();
     }
 
 
-    public void drawAll(){
+    public void drawAll() {
         baseG.setStroke(Color.WHITE);
         baseG.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (Figure f : getMainApp().figureList){
+        for (Figure f : getMainApp().figureList) {
             f.draw(baseG);
         }
     }
 
     @FXML
-    public void onBtnConnectClick(){
-        if(btnConnect.getText().equals("Connect")) {
+    public void onBtnConnectClick() {
+        if (btnConnect.getText().equals("Connect")) {
             messageClient = new MessageClient(getMainApp(), msgArea, getMainApp().getServerIP(), getMainApp().messageServerPort);
             if (messageClient.connected) {
                 figureClient = new FigureClient(getMainApp(), baseG, getMainApp().getServerIP(), getMainApp().figureServerPort);
@@ -73,8 +73,7 @@ public class ClientMainWindowController extends BaseController<ClientMainApp> {
                 btnConnect.setText("Connect");
                 showErrorMessage("Не удалось подключиться (проверьте настройки).");
             }
-        }
-        else if(btnConnect.getText().equals("Disconnect")){
+        } else if (btnConnect.getText().equals("Disconnect")) {
             messageClient.disconnect();
             messageClient = null;
             figureClient = null;
@@ -86,8 +85,8 @@ public class ClientMainWindowController extends BaseController<ClientMainApp> {
     }
 
     @FXML
-    public void onBtnSendClick(){
-        if(messageClient != null) {
+    public void onBtnSendClick() {
+        if (messageClient != null) {
             String text = msgField.getText();
             if (!text.equals("")) {
                 text = getMainApp().name + " -> " + text;
@@ -98,16 +97,16 @@ public class ClientMainWindowController extends BaseController<ClientMainApp> {
     }
 
     @FXML
-    private void onSpeakerButtonClicked(){
+    private void onSpeakerButtonClicked() {
         getMainApp().speakerState = !getMainApp().speakerState;
-        if(getMainApp().speakerState)
-            btnSpeaker.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("../resources/icon/speaker.png"))));
+        if (getMainApp().speakerState)
+            btnSpeaker.setGraphic(new ImageView(getMainApp().getResourceLoader().loadImage("speaker")));
         else
-            btnSpeaker.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("../resources/icon/non-speaker.png"))));
+            btnSpeaker.setGraphic(new ImageView(getMainApp().getResourceLoader().loadImage("non-speaker")));
     }
 
 
-    public void clear(){
+    public void clear() {
         getMainApp().figureList.clear();
         canvas.getGraphicsContext2D().setFill(Color.WHITE);
         canvas.getGraphicsContext2D().fillRect(0, 0, canvas.getWidth(), canvas.getHeight());

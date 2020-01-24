@@ -4,6 +4,7 @@ package distance.learning.server;
  */
 
 import distance.learning.common.FXMLLoader;
+import distance.learning.common.ResourceLoader;
 import distance.learning.server.views.ServerMainWindowController;
 import distance.learning.server.views.ServerRootLayoutController;
 import javafx.application.Application;
@@ -31,9 +32,11 @@ public class ServerMainApp extends Application {
     private Mixer.Info mixerInfo = null;
 
     private final FXMLLoader fxmlLoader;
+    private final ResourceLoader resourceLoader;
 
     public ServerMainApp() {
         this.fxmlLoader = new FXMLLoader(FXMLLoader.Mode.SERVER);
+        this.resourceLoader = new ResourceLoader();
     }
 
     public void setMixerInfo(Mixer.Info mixerInfo) {
@@ -149,5 +152,9 @@ public class ServerMainApp extends Application {
 
     public FXMLLoader getFxmlLoader() {
         return fxmlLoader;
+    }
+
+    public ResourceLoader getResourceLoader() {
+        return resourceLoader;
     }
 }
