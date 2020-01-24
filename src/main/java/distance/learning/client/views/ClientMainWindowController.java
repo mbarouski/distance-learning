@@ -5,6 +5,7 @@ import distance.learning.client.FigureClient;
 import distance.learning.client.MessageClient;
 import distance.learning.client.SoundReceiver;
 import distance.learning.common.BaseController;
+import distance.learning.common.ResourceLoader;
 import distance.learning.common.instruments.Figure;
 import distance.learning.common.Message;
 import javafx.fxml.FXML;
@@ -13,7 +14,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
@@ -43,8 +43,14 @@ public class ClientMainWindowController extends BaseController<ClientMainApp> {
     @FXML
     private TextArea msgArea;
 
+    private ResourceLoader resourceLoader;
+
+    public ClientMainWindowController() {
+        this.resourceLoader = new ResourceLoader();
+    }
+
     public void initialize() {
-//        btnSpeaker.setGraphic(new ImageView(getMainApp().getResourceLoader().loadImage("non-speaker")));
+        btnSpeaker.setGraphic(new ImageView(getResourceLoader().loadImage("non-speaker")));
         canvas.getGraphicsContext2D().setFill(Color.WHITE);
         canvas.getGraphicsContext2D().fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         baseG = canvas.getGraphicsContext2D();
@@ -100,9 +106,9 @@ public class ClientMainWindowController extends BaseController<ClientMainApp> {
     private void onSpeakerButtonClicked() {
         getMainApp().speakerState = !getMainApp().speakerState;
         if (getMainApp().speakerState)
-            btnSpeaker.setGraphic(new ImageView(getMainApp().getResourceLoader().loadImage("speaker")));
+            btnSpeaker.setGraphic(new ImageView(getResourceLoader().loadImage("speaker")));
         else
-            btnSpeaker.setGraphic(new ImageView(getMainApp().getResourceLoader().loadImage("non-speaker")));
+            btnSpeaker.setGraphic(new ImageView(getResourceLoader().loadImage("non-speaker")));
     }
 
 
@@ -110,5 +116,9 @@ public class ClientMainWindowController extends BaseController<ClientMainApp> {
         getMainApp().figureList.clear();
         canvas.getGraphicsContext2D().setFill(Color.WHITE);
         canvas.getGraphicsContext2D().fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    }
+
+    public ResourceLoader getResourceLoader() {
+        return resourceLoader;
     }
 }

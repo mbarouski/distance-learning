@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.canvas.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-
+<?import javafx.scene.text.Font?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1000.0" styleClass="background" stylesheets="@../server/styles/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="distance.learning.client.views.ClientMainWindowController">
    <right>
       <VBox prefHeight="554.0" prefWidth="168.0" BorderPane.alignment="CENTER">
