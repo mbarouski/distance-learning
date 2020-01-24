@@ -3,32 +3,38 @@ package distance.learning.server;
  * Created by maxim_anatolevich on 06.04.16.
  */
 
-import distance.learning.server.util.Util;
-import distance.learning.server.view.ServerMainWindowController;
-import distance.learning.server.view.ServerRootLayoutController;
+import distance.learning.common.FXMLLoader;
+import distance.learning.server.views.ServerMainWindowController;
+import distance.learning.server.views.ServerRootLayoutController;
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import javafx.util.Pair;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Mixer;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-public class ServerMainApp extends Application {
+import static java.lang.System.exit;
 
+public class ServerMainApp extends Application {
+    public ServerRootLayoutController rootController;
+    public ServerMainWindowController serverMainWindowController;
 
     public ArrayList<MessageServer> messageServerList = new ArrayList<>();
     public ArrayList<FigureServer> figureServerList = new ArrayList<>();
-    //microphones
+
     public boolean microphoneState = false;
-    public ServerRootLayoutController rootController;
-    public ServerMainWindowController serverMainWindowController;
     private Mixer.Info mixerInfo = null;
+
+    private final FXMLLoader fxmlLoader;
+
+    public ServerMainApp() {
+        this.fxmlLoader = new FXMLLoader(FXMLLoader.Mode.SERVER);
+    }
 
     public void setMixerInfo(Mixer.Info mixerInfo) {
         this.mixerInfo = mixerInfo;
@@ -52,65 +58,39 @@ public class ServerMainApp extends Application {
         launch(args);
     }
 
-    //views
-    private Stage primaryStage;
-    private BorderPane rootLayout;
-
-    private void stopAllThreads() {
-        try {
-            //serverMainWindowController.stopThreads();
-            System.exit(0);
-        } catch (Exception exc) {
-        }
-    }
-
     @Override
     public void start(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Distance Learning Server");
+        primaryStage.setTitle("Distance Learning Server");
         primaryStage.setFullScreen(true);
-        this.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent windowEvent) {
-                //setRunning(false);
-                stopAllThreads();
-                try {
-                    //Thread.sleep(4000);
-                } catch (Exception exc) {
-                }
-            }
-        });
-        initRootLayout();
-        showServerMainWindow();
+        primaryStage.setOnCloseRequest(windowEvent -> exit(0));
+
+        var rootLayout = createRootLayout(primaryStage);
+        showServerMainWindow(rootLayout, primaryStage);
     }
 
-    public void initRootLayout() {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(ServerMainApp.class.getResource("view/ServerRootLayout.fxml"));
-        try {
-            rootLayout = (BorderPane) loader.load();
-            Scene scene = new Scene(rootLayout);
-            primaryStage.setScene(scene);
-            rootController = loader.getController();
+    public BorderPane createRootLayout(Stage primaryStage) {
+        Pair<BorderPane, ServerRootLayoutController> pair = getFxmlLoader().load("ServerRootLayout");
 
-            rootController.setMainApp(this);
-        } catch (Exception exc) {
-        }
+        var rootLayout = pair.getKey();
+        rootController = pair.getValue();
+
+        Scene scene = new Scene(rootLayout);
+        primaryStage.setScene(scene);
+        rootController.setMainApp(this);
+        return rootLayout;
     }
 
-    public void showServerMainWindow() {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(ServerMainApp.class.getResource("view/ServerMainWindow.fxml"));
-        try {
-            BorderPane serverMainWindow = (BorderPane) loader.load();
-            rootLayout.setCenter(serverMainWindow);
+    private void showServerMainWindow(BorderPane rootLayout, Stage primaryStage) {
+        Pair<BorderPane, ServerMainWindowController> pair = getFxmlLoader().load("ServerMainWindow");
 
-            primaryStage.show();
-            serverMainWindowController = loader.getController();
+        BorderPane serverMainWindow = pair.getKey();
+        rootLayout.setCenter(serverMainWindow);
 
-            serverMainWindowController.setMainApp(this);
-        } catch (Exception exc) {
-            Util.showErrorMessage(exc.getMessage());
-        }
+        primaryStage.show();
+
+        serverMainWindowController = pair.getValue();
+        serverMainWindowController.setMainApp(this);
+
         initParams();
     }
 
@@ -122,7 +102,8 @@ public class ServerMainApp extends Application {
             messageServerPort = 8841;
             figureServerPort = 8842;
             mixerInfo = AudioSystem.getMixerInfo()[0];
-        } catch (Exception exc) {
+        } catch (UnknownHostException exc) {
+            throw new IllegalStateException(exc);
         }
     }
 
@@ -164,5 +145,9 @@ public class ServerMainApp extends Application {
 
     public String getPassword() {
         return password;
+    }
+
+    public FXMLLoader getFxmlLoader() {
+        return fxmlLoader;
     }
 }

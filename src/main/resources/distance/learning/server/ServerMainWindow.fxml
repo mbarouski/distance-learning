@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0"
+            prefWidth="1105.0" styleClass="background" stylesheets="@styles/style.css"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="distance.learning.server.views.ServerMainWindowController">
+    <right>
+        <VBox prefHeight="481.0" prefWidth="140.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="btnMicrophone" alignment="CENTER" maxHeight="1.7976931348623157E308"
+                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onMicrophoneButtonClicked"
+                        text="Microphone: on">
+                    <opaqueInsets>
+                        <Insets bottom="5.0"/>
+                    </opaqueInsets>
+                    <VBox.margin>
+                        <Insets bottom="5.0" top="5.0"/>
+                    </VBox.margin>
+                    <font>
+                        <Font name="System Bold" size="13.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="btnStartTranslation" alignment="CENTER" maxHeight="1.7976931348623157E308"
+                        maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false"
+                        onAction="#beginRecord" text="Start translation">
+                    <opaqueInsets>
+                        <Insets bottom="5.0"/>
+                    </opaqueInsets>
+                    <VBox.margin>
+                        <Insets bottom="5.0"/>
+                    </VBox.margin>
+                    <font>
+                        <Font name="System Bold" size="13.0"/>
+                    </font>
+                </Button>
+                <VBox prefHeight="200.0" prefWidth="100.0">
+                    <children>
+                        <Button fx:id="btnRectangle" maxHeight="1.7976931348623157E308"
+                                maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
+                                mnemonicParsing="false" onAction="#onFigureButtonClick" text="Rectangle">
+                            <opaqueInsets>
+                                <Insets bottom="5.0" top="5.0"/>
+                            </opaqueInsets>
+                            <VBox.margin>
+                                <Insets bottom="5.0" top="5.0"/>
+                            </VBox.margin>
+                            <font>
+                                <Font name="System Bold" size="13.0"/>
+                            </font>
+                        </Button>
+                        <Button fx:id="btnEllipse" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                                onAction="#onFigureButtonClick" text="Ellipse">
+                            <opaqueInsets>
+                                <Insets bottom="5.0"/>
+                            </opaqueInsets>
+                            <VBox.margin>
+                                <Insets bottom="5.0"/>
+                            </VBox.margin>
+                            <font>
+                                <Font name="System Bold" size="13.0"/>
+                            </font>
+                        </Button>
+                        <Button fx:id="btnPencil" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                                onAction="#onFigureButtonClick" text="Pencil">
+                            <opaqueInsets>
+                                <Insets bottom="5.0"/>
+                            </opaqueInsets>
+                            <VBox.margin>
+                                <Insets bottom="5.0"/>
+                            </VBox.margin>
+                            <font>
+                                <Font name="System Bold" size="13.0"/>
+                            </font>
+                        </Button>
+                        <Button fx:id="btnPolyline" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                                onAction="#onFigureButtonClick" text="Polyline">
+                            <opaqueInsets>
+                                <Insets bottom="5.0"/>
+                            </opaqueInsets>
+                            <VBox.margin>
+                                <Insets bottom="5.0"/>
+                            </VBox.margin>
+                            <font>
+                                <Font name="System Bold" size="13.0"/>
+                            </font>
+                        </Button>
+                        <Button fx:id="btnText" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                                onAction="#onFigureButtonClick" text="Text">
+                            <VBox.margin>
+                                <Insets bottom="5.0"/>
+                            </VBox.margin>
+                            <font>
+                                <Font name="System Bold" size="13.0"/>
+                            </font>
+                        </Button>
+                        <Button fx:id="btnClear" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                                onAction="#onClearButtonClick" text="Clear">
+                            <opaqueInsets>
+                                <Insets bottom="5.0"/>
+                            </opaqueInsets>
+                            <VBox.margin>
+                                <Insets bottom="5.0"/>
+                            </VBox.margin>
+                            <font>
+                                <Font name="System Bold" size="13.0"/>
+                            </font>
+                        </Button>
+                        <ColorPicker fx:id="clrPicker" maxHeight="1.7976931348623157E308"
+                                     maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
+                                     onAction="#onColorDialogClick">
+                            <VBox.margin>
+                                <Insets bottom="5.0"/>
+                            </VBox.margin>
+                        </ColorPicker>
+                        <Slider fx:id="widthSlider" max="100.0" maxHeight="1.7976931348623157E308"
+                                maxWidth="1.7976931348623157E308" onMouseReleased="#onSliderChange" value="5.0">
+                            <VBox.margin>
+                                <Insets bottom="5.0" top="5.0"/>
+                            </VBox.margin>
+                        </Slider>
+                        <Label fx:id="lblWidth" alignment="CENTER" maxHeight="1.7976931348623157E308"
+                               maxWidth="1.7976931348623157E308" text="Width: 5px">
+                            <VBox.margin>
+                                <Insets bottom="5.0"/>
+                            </VBox.margin>
+                        </Label>
+                    </children>
+                </VBox>
+            </children>
+            <padding>
+                <Insets left="5.0"/>
+            </padding>
+        </VBox>
+    </right>
+    <left>
+        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <TableView fx:id="tableView" onKeyTyped="#onTableKeyTyped" prefHeight="495.0" prefWidth="200.0">
+                    <columns>
+                        <TableColumn fx:id="tableColumn" prefWidth="199.0" text="Изменения"/>
+                    </columns>
+                    <HBox.margin>
+                        <Insets bottom="5.0"/>
+                    </HBox.margin>
+                </TableView>
+            </children>
+            <BorderPane.margin>
+                <Insets right="5.0"/>
+            </BorderPane.margin>
+        </HBox>
+    </left>
+    <bottom>
+        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0"
+                      prefWidth="1013.0">
+                    <children>
+                        <TextArea fx:id="msgArea" editable="false" maxHeight="1.7976931348623157E308"
+                                  maxWidth="1.7976931348623157E308" prefHeight="129.0" prefWidth="1001.0"/>
+                        <TextField fx:id="msgField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                   prefHeight="17.0" prefWidth="1007.0" promptText="Enter your message..."/>
+                    </children>
+                </VBox>
+                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                        onAction="#onBtnSendClick" prefHeight="100.0" prefWidth="99.0" text="Send"/>
+            </children>
+        </HBox>
+    </bottom>
+    <center>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <Canvas fx:id="canvas" height="545.0" nodeOrientation="INHERIT" onMouseClicked="#onCanvasClicked"
+                        onMouseDragged="#onCanvasDragged" onMouseMoved="#onCanvasDragged"
+                        onMousePressed="#onCanvasPressed" styleClass="canvas" width="740.0"
+                        AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+                        AnchorPane.topAnchor="5.0">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Canvas>
+            </children>
+        </AnchorPane>
+    </center>
+    <padding>
+        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
+    </padding>
+</BorderPane>

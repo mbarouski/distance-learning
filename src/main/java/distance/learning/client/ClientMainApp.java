@@ -1,16 +1,16 @@
 package distance.learning.client;
 
-import distance.learning.client.view.ClientMainWindowController;
-import distance.learning.client.view.Controller;
-import distance.learning.client.view.SettingsController;
-import distance.learning.instrument.Figure;
+import distance.learning.client.views.ClientMainWindowController;
+import distance.learning.common.BaseController;
+import distance.learning.common.instruments.Figure;
+import distance.learning.common.FXMLLoader;
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Pair;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Mixer;
@@ -25,6 +25,11 @@ public class ClientMainApp extends Application {
     public ArrayList<Figure> figureList = new ArrayList<>();
     public boolean speakerState = false;
     private Mixer.Info mixerInfo = null;
+    private FXMLLoader fxmlLoader;
+
+    public ClientMainApp() {
+        this.fxmlLoader = new FXMLLoader(FXMLLoader.Mode.CLIENT);
+    }
 
     public void setMixerInfo(Mixer.Info mixerInfo) {
         this.mixerInfo = mixerInfo;
@@ -69,14 +74,13 @@ public class ClientMainApp extends Application {
     }
 
     public void initRootLayout() {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(ClientMainApp.class.getResource("view/ClientRootLayout.fxml"));
         try {
-            rootLayout = (BorderPane) loader.load();
+            Pair<BorderPane, BaseController<ClientMainApp>> pair = getFxmlLoader().load("ClientRootLayout");
+            rootLayout = pair.getKey();
 
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
-            Controller controller = loader.getController();
+            BaseController<ClientMainApp> controller = pair.getValue();
             controller.setMainApp(this);
             primaryStage.show();
         } catch (Exception exc) {
@@ -84,12 +88,11 @@ public class ClientMainApp extends Application {
     }
 
     public void showClientMainWindow() {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(ClientMainApp.class.getResource("view/ClientMainWindow.fxml"));
         try {
-            BorderPane clientMainWindow = (BorderPane) loader.load();
+            Pair<BorderPane, BaseController<ClientMainApp>> pair = getFxmlLoader().load("ClientMainWindow");
+            BorderPane clientMainWindow = pair.getKey();
             rootLayout.setCenter(clientMainWindow);
-            clientMainWindowController = loader.getController();
+            clientMainWindowController = (ClientMainWindowController) pair.getValue();
             clientMainWindowController.setMainApp(this);
         } catch (Exception exc) {
         }
@@ -138,5 +141,9 @@ public class ClientMainApp extends Application {
 
     public InetAddress getGroupIP() {
         return groupIP;
+    }
+
+    public FXMLLoader getFxmlLoader() {
+        return fxmlLoader;
     }
 }

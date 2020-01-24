@@ -1,17 +1,14 @@
 package distance.learning.client;
 
-
-import distance.learning.client.util.Util;
-import distance.learning.overall.Message;
-import distance.learning.overall.MessageUtil;
-import distance.learning.server.MessageServer;
+import distance.learning.common.Message;
+import distance.learning.common.MessageUtil;
 import javafx.scene.control.TextArea;
 
-import java.beans.XMLDecoder;
-import java.beans.XMLEncoder;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+
+import static distance.learning.common.ErrorWindowManager.showErrorMessage;
 
 /**
  * Created by maxim_anatolevich on 22.05.16.
@@ -32,7 +29,7 @@ public class MessageClient extends Thread{
             try {
                 os.write(MessageUtil.getBytesFromMessage(message));
             } catch (Exception exc) {
-                Util.showErrorMessage(exc.getMessage());
+                showErrorMessage(exc.getMessage());
             }
         }
     }
@@ -55,7 +52,7 @@ public class MessageClient extends Thread{
         }
 
         catch (Exception exc){
-            Util.showErrorMessage(exc.getLocalizedMessage());
+            showErrorMessage(exc.getLocalizedMessage());
             clientSocket = null;
         }
     }
@@ -73,7 +70,7 @@ public class MessageClient extends Thread{
             }
         }
         catch(Exception exc){
-            Util.showErrorMessage(exc.getMessage());
+            showErrorMessage(exc.getMessage());
         }
     }
 
@@ -102,7 +99,7 @@ public class MessageClient extends Thread{
             return MessageUtil.getMessageFromBytes(buffer);
         }
         catch(Exception exc){
-            Util.showErrorMessage(exc.getMessage());
+            showErrorMessage(exc.getMessage());
         }
         return null;
     }

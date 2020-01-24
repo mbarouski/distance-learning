@@ -1,14 +1,15 @@
 package distance.learning.client;
 
-import distance.learning.client.util.Util;
-import distance.learning.instrument.Figure;
-import distance.learning.overall.FigureUtil;
+import distance.learning.common.instruments.Figure;
+import distance.learning.common.FigureUtil;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+
+import static distance.learning.common.ErrorWindowManager.showErrorMessage;
 
 /**
  * Created by maxim_anatolevich on 24.05.16.
@@ -31,7 +32,7 @@ public class FigureClient extends Thread {
         }
 
         catch (Exception exc){
-            Util.showErrorMessage(exc.getLocalizedMessage());
+            showErrorMessage(exc.getLocalizedMessage());
             clientSocket = null;
         }
         start();
@@ -56,7 +57,7 @@ public class FigureClient extends Thread {
             return FigureUtil.getFigureFromBytes(buffer);
         }
         catch(Exception exc){
-            Util.showErrorMessage(exc.getMessage());
+            showErrorMessage(exc.getMessage());
         }
         return null;
     }

@@ -1,9 +1,10 @@
 package distance.learning.client;
 
 import distance.learning.server.SoundSender;
-import distance.learning.server.util.Util;
 
 import javax.sound.sampled.*;
+
+import static distance.learning.common.ErrorWindowManager.showErrorMessage;
 
 /**
  * Created by maxim_anatolevich on 23.04.16.
@@ -22,7 +23,7 @@ public class PlayThread{
             speakerLine.start();
         }
         catch (Exception exc){
-            Util.showErrorMessage("play: " + exc.getMessage());
+            showErrorMessage("play: " + exc.getMessage());
         }
     }
 

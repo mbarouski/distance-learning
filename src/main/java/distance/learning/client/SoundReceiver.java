@@ -1,10 +1,10 @@
 package distance.learning.client;
 
-import distance.learning.server.util.Util;
-
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+
+import static distance.learning.common.ErrorWindowManager.showErrorMessage;
 
 /**
  * Created by maxim_anatolevich on 23.04.16.
@@ -31,7 +31,7 @@ public class SoundReceiver extends Thread{
             clientSocket.joinGroup(InetAddress.getByName("239.255.255.255"));
         }
         catch(Exception exc){
-            Util.showErrorMessage(exc.getMessage());
+            showErrorMessage(exc.getMessage());
         }
     }
 
@@ -51,7 +51,7 @@ public class SoundReceiver extends Thread{
                         playThread.play(buffer, read);
             }
             catch(Exception exc){
-                Util.showErrorMessage(exc.getMessage());
+                showErrorMessage(exc.getMessage());
             }
         }
     }

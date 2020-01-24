@@ -1,10 +1,9 @@
 package distance.learning.server;
 
-import distance.learning.server.util.Util;
-
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.InetAddress;
+
+import static distance.learning.common.ErrorWindowManager.showErrorMessage;
 
 /**
  * Created by maxim_anatolevich on 23.04.16.
@@ -21,7 +20,7 @@ public class SoundSender{
         }
         catch(Exception exc){
             serverDatagramSocket = null;
-            Util.showErrorMessage(exc.getMessage());
+            showErrorMessage(exc.getMessage());
         }
     }
 
@@ -33,7 +32,7 @@ public class SoundSender{
                 serverDatagramSocket.send(datagramPacket);
         }
         catch(Exception exc){
-            Util.showErrorMessage(exc.getMessage());
+            showErrorMessage(exc.getMessage());
         }
     }
 }

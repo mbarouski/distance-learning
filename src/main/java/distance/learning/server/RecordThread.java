@@ -1,8 +1,8 @@
 package distance.learning.server;
 
-import distance.learning.server.util.Util;
-
 import javax.sound.sampled.*;
+
+import static distance.learning.common.ErrorWindowManager.showErrorMessage;
 
 /**
  * Created by maxim_anatolevich on 18.04.16.
@@ -48,7 +48,7 @@ public class RecordThread extends Thread{
             System.out.println("recordthread stopped");
         }
         catch (Exception exc){
-            Util.showErrorMessage(exc.getMessage());
+            showErrorMessage(exc.getMessage());
         }
     }
 }

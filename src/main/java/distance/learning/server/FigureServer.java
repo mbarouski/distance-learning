@@ -1,12 +1,13 @@
 package distance.learning.server;
 
-import distance.learning.client.util.Util;
-import distance.learning.instrument.Figure;
-import distance.learning.overall.FigureUtil;
+import distance.learning.common.instruments.Figure;
+import distance.learning.common.FigureUtil;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.io.*;
 import java.net.Socket;
+
+import static distance.learning.common.ErrorWindowManager.showErrorMessage;
 
 /**
  * Created by maxim_anatolevich on 24.05.16.
@@ -30,11 +31,11 @@ public class FigureServer{
             os = clientSocket.getOutputStream();
 
             is = clientSocket.getInputStream();
-            for(Figure f: serverMainApp.serverMainWindowController.figureList)
-                sendFigure(f);
+//            for(Figure f: serverMainApp.serverMainWindowController.figureList)
+//                sendFigure(f);
         }
         catch (Exception exc){
-            Util.showErrorMessage(exc.getMessage());
+            showErrorMessage(exc.getMessage());
         }
     }
 

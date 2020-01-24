@@ -1,13 +1,14 @@
 package distance.learning.server;
 
-import distance.learning.client.util.Util;
-import distance.learning.overall.Message;
-import distance.learning.overall.MessageUtil;
+import distance.learning.common.Message;
+import distance.learning.common.MessageUtil;
 import javafx.scene.control.TextArea;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import static distance.learning.common.ErrorWindowManager.showErrorMessage;
 
 /**
  * Created by maxim_anatolevich on 22.05.16.
@@ -44,7 +45,7 @@ public class MessageServer extends Thread {
                 connected = false;
             }
         } catch (Exception exc) {
-            Util.showErrorMessage(exc.getMessage());
+            showErrorMessage(exc.getMessage());
         }
     }
 
@@ -61,7 +62,7 @@ public class MessageServer extends Thread {
             } else
                 return m;
         } catch (Exception exc) {
-            Util.showErrorMessage(exc.getMessage());
+            showErrorMessage(exc.getMessage());
         }
         return null;
     }
@@ -78,7 +79,7 @@ public class MessageServer extends Thread {
                 }
             }
         } catch (Exception exc) {
-            Util.showErrorMessage(exc.getMessage());
+            showErrorMessage(exc.getMessage());
         }
         return false;
     }
