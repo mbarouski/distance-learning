@@ -48,9 +48,7 @@ public class FXMLLoader {
     }
 
     private String makePath(String name) {
-        var path = "/distance/learning/" + mode.name().toLowerCase() + "/" + name + ".fxml";
-        System.out.println(path);
-        return path;
+        return "/distance/learning/" + mode.name().toLowerCase() + "/" + name + ".fxml";
     }
 
     public static enum Mode {

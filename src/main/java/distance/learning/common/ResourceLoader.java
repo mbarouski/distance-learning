@@ -14,8 +14,6 @@ public class ResourceLoader {
         if (loadedImages.containsKey(name)) {
             return loadedImages.get(name);
         }
-        var image = new Image(getClass().getResourceAsStream(format("/icons/%s.png", name)));
-        loadedImages.put(name, image);
-        return image;
+        return new Image(getClass().getResourceAsStream(format("/icons/%s.png", name)));
     }
 }

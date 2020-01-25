@@ -1,10 +1,13 @@
 package distance.learning.server.views;
 
 import distance.learning.common.BaseController;
-import distance.learning.common.instruments.*;
 import distance.learning.common.Message;
 import distance.learning.common.ResourceLoader;
-import distance.learning.server.*;
+import distance.learning.common.instruments.*;
+import distance.learning.server.FigureServer;
+import distance.learning.server.MessageServer;
+import distance.learning.server.RecordThread;
+import distance.learning.server.ServerMainApp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -247,7 +250,7 @@ public class ServerMainWindowController extends BaseController<ServerMainApp> {
 
     private AudioFormat audioFormat = new AudioFormat(
             AudioFormat.Encoding.PCM_SIGNED,
-            8000, 16, 2, 4, 8000, false);
+            8000, 32, 2, 4, 8000, false);
 
     //@FXML
     public void beginRecord() {
